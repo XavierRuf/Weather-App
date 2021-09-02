@@ -19,7 +19,7 @@ function GeoWeather() {
     setLongitude(position.coords.longitude);
   };
 
-  const fetchCurrentWeather = useCallback(async () => {
+  const fetchCurrentWeather = useCallback( async () => {
     try {
       await window.navigator.geolocation.getCurrentPosition(
         savePositionToState
