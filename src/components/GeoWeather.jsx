@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Location from "./Location";
+import Loader from "./Loader";
 
 import { constants } from "../constants";
 function GeoWeather() {
   //geolocation weather
+  const [loading, setLoading] = useState(true);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [forecast, setForecast] = useState("");
   const [temperature, setTemperature] = useState("");
   const [cityName, setCityName] = useState("");
+  const [country, setCountry] = useState("");
 
   const savePositionToState = (position) => {
-    console.log(position);
     setLatitude(position.coords.latitude);
     setLongitude(position.coords.longitude);
   };
 
-  const fetchCurrentWeather = async () => {
+  const fetchCurrentWeather = useCallback(async () => {
     try {
       await window.navigator.geolocation.getCurrentPosition(
         savePositionToState
@@ -27,22 +29,34 @@ function GeoWeather() {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          setForecast(data.weather[0].main)
-          setTemperature(data.main.temp);
+          setForecast(data.weather[0].main);
+          setTemperature(15);
           setCityName(data.name);
+          setLoading(false);
+          setCountry(data.sys.country);
         });
-      console.log("res ---", res);
+      return res;
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [latitude, longitude]);
 
   useEffect(() => {
     fetchCurrentWeather();
-  }, []);
+  }, [fetchCurrentWeather]);
   return (
-    <Location name={cityName} temp={temperature} weather={forecast} />
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Location
+          name={cityName}
+          country={country}
+          temp={temperature}
+          weather={forecast}
+        />
+      )}
+    </>
   );
 }
 
