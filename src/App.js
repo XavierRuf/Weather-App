@@ -18,7 +18,7 @@ function App() {
   const error = (
     <div style={{ margin: "0 auto", textAlign: "center" }}>
       <h3 style={{ color: "#e62c17", fontWeight: "700" }}>
-        Oooops!!! Something went wrong...
+        Oooops!!! Something went wrong... Reload page and try again!
       </h3>
     </div>
   );
@@ -63,7 +63,7 @@ function App() {
           search={search}
           onChange={(e) => setQuery(e.target.value)}
         />
-        {!name ? (
+        {(isError ? isError : !name ? (
           <GeoWeather />
         ) : (
           <Location
@@ -72,7 +72,7 @@ function App() {
             temp={temp}
             weather={weather}
           />
-        )}
+        ))}
       </main>
     </div>
   );
