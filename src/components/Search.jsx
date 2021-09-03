@@ -1,17 +1,17 @@
 import React from "react";
+import { Form, FormControl } from "react-bootstrap";
 
 function Search({ query, search, onChange }) {
   return (
-    <div className="search-box">
-      <input
+    <Form className="search-box" xs={4}>
+      <FormControl
         type="text"
-        className="search-bar"
         placeholder="Search..."
         onChange={onChange}
         value={query}
         onKeyPress={search}
       />
-    </div>
+    </Form>
   );
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
 function Layout({ temperature, children }) {
   const getTempClassName = () => {
@@ -13,11 +14,14 @@ function Layout({ temperature, children }) {
   };
 
   return (
-    <div
+    <Container
       className={temperature ? "app" + getTempClassName() : "app medium-cold"}
+      fluid
     >
-      <main>{children}</main>
-    </div>
+      <Row className="main">
+        <Col xs={12}>{children}</Col>
+      </Row>
+    </Container>
   );
 }
 

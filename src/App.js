@@ -1,4 +1,6 @@
 import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Alert from "react-bootstrap/esm/Alert";
 
 import Location from "./components/Location";
 import Search from "./components/Search";
@@ -16,16 +18,15 @@ function App() {
   const { temp, name, country, weather } = fetchedWeather;
 
   const error = (
-    <div style={{ margin: "0 auto", textAlign: "center" }}>
-      <h3 style={{ color: "#e62c17", fontWeight: "700" }}>
-        Oooops!!! Something went wrong... Enter the correct name and try again!
-      </h3>
-    </div>
+    <Alert variant="danger" style={{ margin: "0 auto", textAlign: "center" }}>
+      Oooops!!! Something went wrong... Enter the correct name and try again!
+    </Alert>
   );
 
   const search = async (e) => {
     try {
       if (e.key === "Enter") {
+        e.preventDefault();
         setIsError(false);
         const fetchedBySearch = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&APPID=${constants.API_KEY}`
